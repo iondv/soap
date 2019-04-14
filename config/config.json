@@ -1,0 +1,13 @@
+{
+  "parametrised": true,
+  "di" : {
+    "wsToken": {
+      "module": "./service/wsToken",
+      "options": {
+        "ws": "ion://wsAuth",
+        "auth": "ion://auth",
+        "acl": "ion://aclProvider"
+      }
+    }
+  }
+}

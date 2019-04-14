@@ -1,0 +1,25 @@
+<%
+if (typeof obj.val === 'string') {
+
+%><impl:<%=obj.tag %><%- partial('tagAttributes', { attrs: obj.attrs }) %>><%=obj.val %></impl:<%=obj.tag %>><%
+
+} else if (obj.val === null) {
+
+%><impl:<%=obj.tag %><%- partial('tagAttributes', { attrs: obj.attrs }) %> xsi:nil="true"/><%
+
+} else if (Array.isArray(obj.val)) {
+
+%><impl:<%=obj.tag %><%- partial('tagAttributes', { attrs: obj.attrs }) %>><%
+
+obj.val.forEach(function (o) {
+  if (o && typeof o === 'object') {
+  %><%- partial('responseObject', { obj: o }) %><%
+  }
+});
+
+%></impl:<%=obj.tag %>><%
+
+} else if (typeof obj.val === 'object') {
+%><%- partial('responseObject', { obj: obj.val }) %><%
+}
+%>

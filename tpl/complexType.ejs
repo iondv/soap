@@ -1,0 +1,30 @@
+
+<xsd:complexType name="<%=name%>">
+  <xsd:sequence>
+  <%
+    var t;
+    for (var nm in type) {
+      if (type.hasOwnProperty(nm)) {
+        if (typeof type[nm] === 'string') {
+          if (type[nm].substring(type[nm].length - 2) === '[]') {
+            t = type[nm].substring(0, type[nm].length - 2);
+          %>
+          <xsd:element minOccurs="0" maxOccurs="1" name="<%=nm%>">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element minOccurs="0" name="<%=t%>" type="tns:<%=t%>"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <%
+          } else {
+          %>
+          <xsd:element minOccurs="0" maxOccurs="1" name="<%=nm%>" type="tns:<%=type[nm]%>"/>
+          <%
+          }
+        }
+      }
+    }
+  %>
+  </xsd:sequence>
+</xsd:complexType>

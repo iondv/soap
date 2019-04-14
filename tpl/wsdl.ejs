@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="<%=endPoint%>"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="<%=endPoint%>">
+  <wsdl:types>
+    <xsd:schema targetNamespace="<%=endPoint%>" xmlns:tns="<%=endPoint%>">
+      <xsd:simpleType name="String">
+        <xsd:restriction base="xsd:string" />
+      </xsd:simpleType>
+      <xsd:element name="String" type="tns:String" />
+      <xsd:simpleType name="Integer">
+        <xsd:restriction base="xsd:integer" />
+      </xsd:simpleType>
+      <xsd:element name="Integer" type="tns:Integer" />
+      <xsd:simpleType name="Float">
+        <xsd:restriction base="xsd:float" />
+      </xsd:simpleType>
+      <xsd:element name="Float" type="tns:Float" />
+      <xsd:simpleType name="Date">
+        <xsd:restriction base="xsd:date" />
+      </xsd:simpleType>
+      <xsd:element name="Date" type="tns:Date" />
+      <xsd:simpleType name="DateTime">
+        <xsd:restriction base="xsd:dateTime" />
+      </xsd:simpleType>
+      <xsd:element name="DateTime" type="tns:DateTime" />
+      <xsd:simpleType name="Boolean">
+        <xsd:restriction base="xsd:boolean" />
+      </xsd:simpleType>
+      <xsd:element name="Boolean" type="tns:Boolean" />
+      <xsd:simpleType name="Base64">
+        <xsd:restriction base="xsd:base64Binary" />
+      </xsd:simpleType>
+      <xsd:element name="Base64" type="tns:Base64" />
+      <xsd:simpleType name="Hex">
+        <xsd:restriction base="xsd:hexBinary" />
+      </xsd:simpleType>
+      <xsd:element name="Hex" type="tns:Hex" />
+      <%
+        if (typeof types !== 'undefined') {
+          for (let nm in types) {
+            if (types.hasOwnProperty(nm)) {
+              if (typeof types[nm] === 'object') {
+        %>
+        <%- partial('complexType', { type: types[nm], name: nm }) %>
+        <%
+        } else if (typeof types[nm] === 'string') {
+        if (types[nm].substring(types[nm].length - 2) === '[]') {
+          let t = types[nm].substring(0, types[nm].length - 2);
+        %>
+        <xsd:complexType name="<%=nm%>">
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="<%=t%>" type="tns:<%=t%>"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      <%
+      } else {
+      %>
+      <xsd:simpleType name="<%=nm%>">
+        <xsd:restriction base="tns:<%=types[nm]%>"/>
+      </xsd:simpleType>
+      <%
+      }
+              }
+      %>
+      <xsd:element name="<%=nm%>" type="tns:<%=nm%>" />
+      <%
+            }
+          }
+        }
+      %>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="VoidMessage">
+  </wsdl:message>
+  <%
+  for (let nm in messages) {
+    if (messages.hasOwnProperty(nm)) {
+  %>
+  <wsdl:message name="<%=nm%>">
+    <%
+    for (let i = 0; i < messages[nm].length; i++) {
+      if (typeof messages[nm][i] === 'object') {
+    %>
+    <wsdl:part name="<%=messages[nm][i].name%>" type="tns:<%=messages[nm][i].type%>"></wsdl:part>
+    <%
+      } else {
+    %>
+    <wsdl:part element="tns:<%=messages[nm][i]%>"></wsdl:part>
+    <%
+      }
+    }
+    %>
+  </wsdl:message>
+  <%
+    }
+  } %>
+  <wsdl:portType name="<%=name%>PortType">
+<%
+for (let nm in operations) {
+  if (operations.hasOwnProperty(nm)) {
+%>
+    <wsdl:operation name="<%=nm%>">
+      <% if (operations[nm].input) { %>
+      <wsdl:input message="tns:<%=operations[nm].input%>"></wsdl:input>
+      <% } else { %>
+      <wsdl:input message="tns:VoidMessage"></wsdl:input>
+      <% } %>
+      <% if (operations[nm].output) { %>
+      <wsdl:output message="tns:<%=operations[nm].output%>"></wsdl:output>
+      <% } else { %>
+      <wsdl:output message="tns:VoidMessage"></wsdl:output>
+      <% } %>
+    </wsdl:operation>
+<%
+  }
+}
+%>
+  </wsdl:portType>
+
+  <wsdl:binding name="<%=name%>Binding" type="tns:<%=name%>PortType">
+
+    <soap:binding style="<%=style%>" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <%
+    for (let nm in operations) {
+      if (operations.hasOwnProperty(nm)) {
+    %>
+    <wsdl:operation name="<%=nm%>">
+      <soap:operation soapAction="<%=endPoint%>/<%=nm%>"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <%
+      }
+    }
+    %>
+  </wsdl:binding>
+
+  <wsdl:service name="<%=name%>">
+
+    <wsdl:port binding="tns:<%=name%>Binding" name="<%=name%>Port">
+
+      <soap:address location="<%=endPoint%>"/>
+
+    </wsdl:port>
+
+  </wsdl:service>
+
+</wsdl:definitions>
