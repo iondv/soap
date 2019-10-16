@@ -22,9 +22,9 @@ module.exports = function (req, res) {
           .then(wsdl => res.set('Content-type', 'text/xml; charset=utf-8').send(wsdl))
           .catch((err) => {
             scope.sysLog.error(err);
-            res.status(500).send('Внутренняя ошибка сервера.');
+            res.status(500).send('Internal server error.');
           });
       }
     }
-    res.status(404).send('Сервис с указанным именем не найден!');
+    res.status(404).send('Service with the specified name is not found!');
   };

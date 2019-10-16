@@ -37,7 +37,7 @@ module.exports = function (req, res) {
           if (authMode !== 'none') {
             let credentials = parseSecurity(req.body, authMode === 'token' || authMode === 'oauth');
             if (!credentials) {
-              return fault(res, {code: errors.ACCESS_DENIED, message: 'Доступ запрещен', stack: ''});
+              return fault(res, {code: errors.ACCESS_DENIED, message: 'Access is denied', stack: ''});
             }
             if (authMode === 'oauth') {
               auth = scope.oauth.authenticate({Authorization: 'Bearer ' + credentials.token});
@@ -65,10 +65,10 @@ module.exports = function (req, res) {
             });
         } catch (err) {
           scope.sysLog.error(err);
-          fault(res, {code: 500, message: 'Внутренняя ошибка сервера', stack: err.stack});
+          fault(res, {code: 500, message: 'Internal Server Error', stack: err.stack});
         }
         return;
       }
     }
-    res.status(404).send('Сервис с указанным именем не найден.');
+    res.status(404).send('Service name not found.');
   };
