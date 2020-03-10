@@ -1,12 +1,8 @@
 /**
  * Created by krasilneg on 29.07.17.
  */
-'use strict';
 const Dom = require('xmldom').DOMParser;
 const xpath = require('xpath');
-const buf = require('core/buffer');
-const base64 = require('base64-js');
-const moment = require('moment');
 
 // jshint maxcomplexity: 20, maxstatements: 30
 module.exports = function (body, forceToken) {

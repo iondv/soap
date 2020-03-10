@@ -101,7 +101,7 @@ _SOAP_ module is used in [dnt.iondv.com](https://dnt.iondv.com/geomap). The appl
 
  #### [Licence](/LICENSE) &ensp;  [Contact us](https://iondv.com) &ensp;   [Russian](/README_RU.md)   &ensp; [FAQs](/faqs.md)          
 
-<div><img src="https://mc.iondv.com/watch/github/docs/soap" style="position:absolute; left:-9999px;" height=1 width=1 alt="iondv metrics"></div>
+<div><img src="https://mc.iondv.com/watch/local/docs/soap" style="position:absolute; left:-9999px;" height=1 width=1 alt="iondv metrics"></div>
 
 --------------------------------------------------------------------------  
 

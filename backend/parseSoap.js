@@ -8,6 +8,7 @@ const buf = require('core/buffer');
 const base64 = require('base64-js');
 const moment = require('moment');
 const IonError = require('core/IonError');
+const Errors = require('../errors/backend-errors');
 
 function checkArgPath(arg, path) {
   if (arg && path) {
@@ -61,7 +62,7 @@ function castArg(arg, typeName, types) {
         if (types.hasOwnProperty(typeName) && typeof types[typeName] === 'string') {
           return castArg(arg, types[typeName], types);
         }
-        throw new Error('Неподдерживаемый тип ' + typeName);
+        throw new IonError(Errors.UNSUPPORTED_TYPE, {type: typeName});
       }
     }
   } else if (typeName === 'String' && arg.firstChild && arg.firstChild.nodeValue === '') {
@@ -92,7 +93,7 @@ function parseArgObject(arg, typeName, meta = {}, mapping = {}, xop = {}, strict
           strict
         );
     } else if (strict) {
-      throw new Error(`Элемент ${typeName}.${childNodes[i].localName} противоречит схеме данных.`);
+      throw new IonError(Errors.WRONG_NODE, {type: typeName, name: childNodes[i].localName});
     }
   }
   return result;
@@ -148,7 +149,7 @@ function parseArg(arg, part, meta, mapping, xop, strict = false) {
   }
 
   if (typeName !== '*' && typeName !== '*[]' && arg.localName !== tagName) {
-    throw new Error(`Передан некорректный аргумент метода: ${arg.localName} вместо ${tagName}`);
+    throw new IonError(Errors.WRONG_ARG, {arg: arg.localName, tag: tagName});
   }
 
   let extraType = null;
@@ -246,10 +247,10 @@ module.exports = function (body, meta, mapping, style, method, messageType, xop,
 
       let childNodes = xpath.select('*', root);
       if (parts.length > childNodes.length) {
-        throw new Error('Переданы не все аргументы метода.');
+        throw new IonError(Errors.LACK_ARGS);
       }
       if (parts.length < childNodes.length) {
-        throw new Error('Метод вызван с лишними аргументами.');
+        throw new IonError(Errors.WASTE_ARGS);
       }
 
       for (let i = 0; i < childNodes.length; i++) {
@@ -270,5 +271,5 @@ module.exports = function (body, meta, mapping, style, method, messageType, xop,
         xpath.select('*[local-name() = \'faultstring\']/text()', root, true).nodeValue);
     }
   }
-  throw new Error('The response message does not contain a body.');
+  throw new IonError(Errors.NO_BODY);
 };
