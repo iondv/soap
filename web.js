@@ -6,7 +6,6 @@ const express = require('express');
 const ejsLocals = require('ejs-locals');
 const di = require('core/di');
 const config = require('./config');
-const rootConfig = require('../../config');
 const moduleName = require('./module-name');
 const dispatcher = require('./controllers/dispatcher');
 const wsdl = require('./controllers/wsdl');
@@ -15,9 +14,7 @@ const path = require('path');
 const alias = require('core/scope-alias');
 const errorSetup = require('core/error-setup');
 
-const lang = config.lang || rootConfig.lang || 'ru';
-const i18nDir = path.join(__dirname, 'i18n');
-errorSetup(lang, i18nDir);
+errorSetup(path.join(__dirname, 'strings'));
 
 const app = module.exports = express(); // eslint-disable-line
 
