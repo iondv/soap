@@ -5,6 +5,7 @@
 const express = require('express');
 const ejsLocals = require('ejs-locals');
 const di = require('core/di');
+const {load} = require('core/i18n');
 const config = require('./config');
 const moduleName = require('./module-name');
 const dispatcher = require('./controllers/dispatcher');
