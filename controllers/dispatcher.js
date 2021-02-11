@@ -39,7 +39,7 @@ module.exports = function (req, res) {
         if (authMode !== 'none') {
           let credentials = parseSecurity(req.body, authMode === 'token' || authMode === 'oauth');
           if (!credentials) {
-            return fault(res, {code: errors.ACCESS_DENIED, message: 'Доступ запрещен', stack: ''});
+            return fault(res, {code: errors.ACCESS_DENIED, message: 'Access is denied', stack: ''});
           }
           if (authMode === 'oauth') {
             auth = scope.oauth.authenticate({Authorization: 'Bearer ' + credentials.token});
