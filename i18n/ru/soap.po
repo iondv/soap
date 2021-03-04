@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-04 23:18+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: strings/errors/backend-errors.js:5
+#, javascript-format
+msgid "The client is not connected to service %service"
+msgstr ""
+
+#: strings/errors/backend-errors.js:6
+msgid "Method %method could not be found in service %service"
+msgstr ""
+
+#: strings/errors/backend-errors.js:7
+msgid "WSDL does not contain descriptions of interfaces."
+msgstr ""
+
+#: strings/errors/backend-errors.js:8
+msgid "ID of the edited object was not passed!"
+msgstr ""
+
+#: strings/errors/backend-errors.js:9
+msgid "The response message does not contain a body."
+msgstr ""
+
+#: strings/errors/backend-errors.js:10
+msgid "Empty SOAP message!"
+msgstr ""
+
+#: strings/errors/backend-errors.js:11
+msgid "Unsupported type %type"
+msgstr ""
+
+#: strings/errors/backend-errors.js:12
+msgid "Element %type.%name is not consistent with the data scheme."
+msgstr ""
+
+#: strings/errors/backend-errors.js:13
+msgid "Incorrect method argument passed: %arg instead of %tag"
+msgstr ""
+
+#: strings/errors/backend-errors.js:14
+msgid "The number of method arguments passed is less that expected."
+msgstr ""
+
+#: strings/errors/backend-errors.js:15
+msgid "The method was called with excessive arguments."
+msgstr ""
+
+#: strings/errors/backend-errors.js:16
+msgid "Internal server error"
+msgstr ""
+
+#: strings/errors/backend-errors.js:17
+msgid "Service with the specified name could not be found."
+msgstr ""
