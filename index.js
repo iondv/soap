@@ -4,18 +4,15 @@
 
 const express = require('express');
 const ejsLocals = require('ejs-locals');
-const di = require('core/di');
-const {load} = require('core/i18n');
+const { di } = require('@iondv/core');
+const {load} = require('@iondv/i18n');
+const { utils: { extendDi } } = require('@iondv/commons');
+const sysMenuCheck = require('@iondv/web-rte/util/sysMenuCheck');
+const alias = di.alias;
 const config = require('./config');
-const moduleName = require('./module-name');
 const dispatcher = require('./controllers/dispatcher');
 const wsdl = require('./controllers/wsdl');
-const extendDi = require('core/extendModuleDi');
 const path = require('path');
-const alias = require('core/scope-alias');
-const errorSetup = require('core/error-setup');
-
-errorSetup(path.join(__dirname, 'strings'));
 
 const app = module.exports = express(); // eslint-disable-line
 
@@ -26,7 +23,7 @@ app.engine('ejs', ejsLocals);
 app.set('views', path.join(__dirname, '/tpl'));
 app.set('view engine', 'ejs');
 
-app._init = function() {
+app._init = function (moduleName) {
   /**
    * @type {{settings: SettingsRepository, auth: Auth, sessionHandler: SessionHandler}}
    */
@@ -35,11 +32,9 @@ app._init = function() {
   rootScope.auth.exclude(`/${moduleName}/**`);
   rootScope.sessionHandler.exclude(`/${moduleName}/**`);
 
-  return di(moduleName,
+  return di(
     extendDi(moduleName, config.di),
     {module: app},
-    'app',
-    [],
-    `modules/${moduleName}`)
+    'app')
     .then(scope => alias(scope, scope.settings.get(`${moduleName}.di-alias`)));
 };

@@ -3,14 +3,12 @@
  */
 'use strict';
 
-const moduleName = require('./../module-name');
-const di = require('core/di');
-const IonError = require('core/IonError');
-const errors = require('core/errors/front-end');
+const { di, utils: { strings } } = require('@iondv/core');
+const { IonError } = require('@iondv/core');
 const parseSecurity = require('../backend/parseSecurity');
 const ISoapService = require('../lib/interfaces/ISoapService');
 const Errors = require('../errors/backend-errors');
-const __ = require('core/strings').unprefix('errors');
+const __ = strings.unprefix('errors');
 
 function fault(res, err) {
   res.set('Content-Type', 'text/xml; charset=utf-8').render('fault', err);
@@ -25,7 +23,7 @@ module.exports = function (req, res) {
   /**
    * @type {{metaRepo: MetaRepository, sysLog: Logger, wsAuth: WsAuth}}
    */
-  let scope = di.context(moduleName);
+  let scope = di.context(req.moduleName);
   if (scope.hasOwnProperty(req.params.service)) {
     /**
      * @type {Service}
@@ -33,7 +31,7 @@ module.exports = function (req, res) {
     let s = scope[req.params.service];
     if (s instanceof ISoapService) {
       try {
-        let authMode = scope.settings.get(moduleName + '.authMode') || {};
+        let authMode = scope.settings.get(req.moduleName + '.authMode') || {};
         authMode = authMode[req.params.service] || 'pwd';
         let auth;
         if (authMode !== 'none') {

@@ -1,5 +1,5 @@
 const codes = require('../../errors/backend-errors');
-const {w: t} = require('core/i18n');
+const {w: t} = require('@iondv/i18n');
 
 module.exports = {
   [codes.NO_CONNECTION]: t('The client is not connected to service %service'),

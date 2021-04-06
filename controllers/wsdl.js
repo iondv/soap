@@ -3,17 +3,16 @@
  */
 'use strict';
 
-const moduleName = require('../module-name');
-const di = require('core/di');
+const { di, utils: { strings } } = require('@iondv/core');
 const ISoapService = require('../lib/interfaces/ISoapService');
 const Errors = require('../errors/backend-errors');
-const __ = require('core/strings').unprefix('errors');
+const __ = strings.unprefix('errors');
 
 module.exports = function (req, res) {
   /**
    * @type {{metaRepo: MetaRepository, sysLog: Logger, settings: SettingsRepository}}
    */
-  const scope = di.context(moduleName);
+  const scope = di.context(req.moduleName);
   if (scope.hasOwnProperty(req.params.service)) {
     /**
      * @type {ISoapService}

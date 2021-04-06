@@ -4,10 +4,10 @@
 'use strict';
 const Dom = require('xmldom').DOMParser;
 const xpath = require('xpath');
-const buf = require('core/buffer');
+const buf = (data, enc) => Buffer.from(data, enc);
 const base64 = require('base64-js');
 const moment = require('moment');
-const IonError = require('core/IonError');
+const { IonError } = require('@iondv/core');
 const Errors = require('../errors/backend-errors');
 
 function checkArgPath(arg, path) {

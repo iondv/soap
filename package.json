@@ -7,7 +7,6 @@
   },
   "license": "Apache License 2.0",
   "engines": {
-    "node": ">=8.9.0",
     "ion": "4.0.0"
   },
   "repository": {
@@ -18,12 +17,19 @@
   "dependencies": {
     "b64": "4.x.x",
     "boom": "7.x.x",
-    "ejs": "^2.5.7",
     "hoek": "5.x.x",
     "jsontoxml": "^1.0.0",
     "nigel": "3.x.x",
     "pump": "3.0.0",
     "xml2js": "^0.4.19",
-    "xtend": "^4.0.1"
+    "xtend": "^4.0.1",
+    "@iondv/acl-contracts": "iondv/acl-contracts#main",
+    "@iondv/commons": "iondv/commons#main",
+    "@iondv/core": "iondv/core#main",
+    "@iondv/i18n": "iondv/i18n#main",
+    "@iondv/meta-model": "iondv/meta-model#main",
+    "@iondv/meta-model-contracts": "iondv/meta-model-contracts#main",
+    "@iondv/web": "iondv/web#main",
+    "@iondv/web-rte": "iondv/web-rte#main"
   }
 }
