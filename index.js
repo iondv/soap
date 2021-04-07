@@ -16,8 +16,8 @@ const path = require('path');
 
 const app = module.exports = express(); // eslint-disable-line
 
-app.get(`/${moduleName}/:service.wsdl`, wsdl);
-app.post(`/${moduleName}/:service`, dispatcher);
+app.get('/:service.wsdl', wsdl);
+app.post('/:service', dispatcher);
 
 app.engine('ejs', ejsLocals);
 app.set('views', path.join(__dirname, '/tpl'));
@@ -33,6 +33,7 @@ app._init = function (moduleName) {
   rootScope.sessionHandler.exclude(`/${moduleName}/**`);
 
   return di(
+    moduleName,
     extendDi(moduleName, config.di),
     {module: app},
     'app')

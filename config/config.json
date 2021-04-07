@@ -2,7 +2,7 @@
   "parametrised": true,
   "di" : {
     "wsToken": {
-      "module": "./service/wsToken",
+      "module": "@iondv/soap/service/wsToken",
       "options": {
         "ws": "ion://wsAuth",
         "auth": "ion://auth",
