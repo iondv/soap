@@ -4,7 +4,7 @@
 'use strict';
 const Dom = require('xmldom').DOMParser;
 const xpath = require('xpath');
-const buf = (data, enc) => Buffer.from(data, enc);
+const buf = Buffer.from;
 const base64 = require('base64-js');
 const moment = require('moment');
 const { IonError } = require('@iondv/core');
